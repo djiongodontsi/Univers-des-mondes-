@@ -7,7 +7,7 @@ from groq import Groq
 # ============================================
 # CONFIGURATION
 # ============================================
-GROQ_API_KEY = "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"  # Remplace par ta clé
+GROQ_API_KEY = "gsk_xxxxxxxxxxxxxxxxxxxxxxxx"  # ⚠️ Remplace par ta vraie clé Groq
 client = Groq(api_key=GROQ_API_KEY)
 
 # ============================================
@@ -60,10 +60,10 @@ Réponds en 3 mots maximum. Sois sarcastique.
 """
     chat_completion = client.chat.completions.create(
         messages=[
-            {"role": "system", "content": "Tu es un juge. Tu réponds TOUJOURS en 3 mots maximum."},
+            {"role": "system", "content": "Tu es un juge. Tu réponds TOUJOURS en 3 mots maximum. Jamais plus."},
             {"role": "user", "content": prompt}
         ],
-        model="llama3-8b-8192",
+        model="openai/gpt-oss-20b",  # ✅ Modèle corrigé et supporté par Groq
         temperature=0.7,
         max_tokens=20
     )
@@ -83,9 +83,14 @@ if __name__ == "__main__":
     print("=" * 50)
     
     monde = "VISUEL"
+    
+    # Étape 1 : Enregistrer la voix
     fichier = enregistrer_audio(duree=5)
+    
+    # Étape 2 : Transcrire avec Groq Whisper
     reponse = transcrire_audio(fichier)
     
+    # Étape 3 : Demander le verdict à l'IA
     if reponse:
         verdict = demander_verdict(reponse, monde)
         print("\n" + "=" * 50)
@@ -94,5 +99,6 @@ if __name__ == "__main__":
     else:
         print("❌ Aucune réponse détectée.")
     
+    # Nettoyage
     if os.path.exists(fichier):
         os.remove(fichier)
