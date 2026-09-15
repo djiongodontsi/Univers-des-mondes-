@@ -63,7 +63,7 @@ Réponds en 3 mots maximum. Sois sarcastique.
             {"role": "system", "content": "Tu es un juge. Tu réponds TOUJOURS en 3 mots maximum."},
             {"role": "user", "content": prompt}
         ],
-        model="llama3-8b-8192",
+        model="openai/gpt-oss-20b",
         temperature=0.7,
         max_tokens=20
     )
@@ -94,5 +94,8 @@ if __name__ == "__main__":
     else:
         print("❌ Aucune réponse détectée.")
     
-    if os.path.exists(fichier):
-        os.remove(fichier)
+  # Nettoyage (désactivé pour garder le fichier)
+    #if os.path.exists(fichier):
+        #os.remove(fichier)
+   
+
